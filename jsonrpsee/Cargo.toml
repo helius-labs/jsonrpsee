@@ -1,5 +1,5 @@
 [package]
-name = "jsonrpsee"
+name = "jsonrpsee_helius"
 description = "JSON-RPC client/server framework"
 version.workspace = true
 authors.workspace = true
