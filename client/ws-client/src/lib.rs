@@ -85,8 +85,8 @@ use jsonrpsee_client_transport::ws::CertificateStore;
 pub struct WsClientBuilder {
 	#[cfg(feature = "tls")]
 	certificate_store: CertificateStore,
-	max_request_size: u32,
-	max_response_size: u32,
+	max_request_size: usize,
+	max_response_size: usize,
 	request_timeout: Duration,
 	connection_timeout: Duration,
 	ping_config: Option<PingConfig>,
@@ -195,13 +195,13 @@ impl WsClientBuilder {
 	}
 
 	/// See documentation [`WsTransportClientBuilder::max_request_size`] (default is 10 MB).
-	pub fn max_request_size(mut self, size: u32) -> Self {
+	pub fn max_request_size(mut self, size: usize) -> Self {
 		self.max_request_size = size;
 		self
 	}
 
 	/// See documentation [`WsTransportClientBuilder::max_response_size`] (default is 10 MB).
-	pub fn max_response_size(mut self, size: u32) -> Self {
+	pub fn max_response_size(mut self, size: usize) -> Self {
 		self.max_response_size = size;
 		self
 	}

@@ -90,9 +90,9 @@ pub struct HttpTransportClientBuilder<L> {
 	#[cfg(feature = "tls")]
 	pub(crate) certificate_store: CertificateStore,
 	/// Configurable max request body size
-	pub(crate) max_request_size: u32,
+	pub(crate) max_request_size: usize,
 	/// Configurable max response body size
-	pub(crate) max_response_size: u32,
+	pub(crate) max_response_size: usize,
 	/// Max length for logging for requests and responses
 	///
 	/// Logs bigger than this limit will be truncated.
@@ -136,13 +136,13 @@ impl<L> HttpTransportClientBuilder<L> {
 	}
 
 	/// Set the maximum size of a request body in bytes. Default is 10 MiB.
-	pub fn max_request_size(mut self, size: u32) -> Self {
+	pub fn max_request_size(mut self, size: usize) -> Self {
 		self.max_request_size = size;
 		self
 	}
 
 	/// Set the maximum size of a response in bytes. Default is 10 MiB.
-	pub fn max_response_size(mut self, size: u32) -> Self {
+	pub fn max_response_size(mut self, size: usize) -> Self {
 		self.max_response_size = size;
 		self
 	}
@@ -300,9 +300,9 @@ pub struct HttpTransportClient<S> {
 	/// HTTP client
 	client: S,
 	/// Configurable max request body size
-	max_request_size: u32,
+	max_request_size: usize,
 	/// Configurable max response body size
-	max_response_size: u32,
+	max_response_size: usize,
 	/// Max length for logging for requests and responses
 	///
 	/// Logs bigger than this limit will be truncated.

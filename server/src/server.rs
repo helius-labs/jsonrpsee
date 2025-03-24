@@ -178,9 +178,9 @@ where
 #[derive(Debug, Clone)]
 pub struct ServerConfig {
 	/// Maximum size in bytes of a request.
-	pub(crate) max_request_body_size: u32,
+	pub(crate) max_request_body_size: usize,
 	/// Maximum size in bytes of a response.
-	pub(crate) max_response_body_size: u32,
+	pub(crate) max_response_body_size: usize,
 	/// Maximum number of incoming connections allowed.
 	pub(crate) max_connections: u32,
 	/// Maximum number of subscriptions per connection.
@@ -206,9 +206,9 @@ pub struct ServerConfig {
 #[derive(Debug, Clone)]
 pub struct ServerConfigBuilder {
 	/// Maximum size in bytes of a request.
-	max_request_body_size: u32,
+	max_request_body_size: usize,
 	/// Maximum size in bytes of a response.
-	max_response_body_size: u32,
+	max_response_body_size: usize,
 	/// Maximum number of incoming connections allowed.
 	max_connections: u32,
 	/// Maximum number of subscriptions per connection.
@@ -387,13 +387,13 @@ impl ServerConfigBuilder {
 	}
 
 	/// See [`Builder::max_request_body_size`] for documentation.
-	pub fn max_request_body_size(mut self, size: u32) -> Self {
+	pub fn max_request_body_size(mut self, size: usize) -> Self {
 		self.max_request_body_size = size;
 		self
 	}
 
 	/// See [`Builder::max_response_body_size`] for documentation.
-	pub fn max_response_body_size(mut self, size: u32) -> Self {
+	pub fn max_response_body_size(mut self, size: usize) -> Self {
 		self.max_response_body_size = size;
 		self
 	}
@@ -546,13 +546,13 @@ impl<RpcMiddleware, HttpMiddleware> TowerServiceBuilder<RpcMiddleware, HttpMiddl
 
 impl<HttpMiddleware, RpcMiddleware> Builder<HttpMiddleware, RpcMiddleware> {
 	/// Set the maximum size of a request body in bytes. Default is 10 MiB.
-	pub fn max_request_body_size(mut self, size: u32) -> Self {
+	pub fn max_request_body_size(mut self, size: usize) -> Self {
 		self.server_cfg.max_request_body_size = size;
 		self
 	}
 
 	/// Set the maximum size of a response body in bytes. Default is 10 MiB.
-	pub fn max_response_body_size(mut self, size: u32) -> Self {
+	pub fn max_response_body_size(mut self, size: usize) -> Self {
 		self.server_cfg.max_response_body_size = size;
 		self
 	}
@@ -1275,7 +1275,7 @@ pub(crate) async fn handle_rpc_call<S>(
 	body: &[u8],
 	is_single: bool,
 	batch_config: BatchRequestConfig,
-	max_response_size: u32,
+	max_response_size: usize,
 	rpc_service: &S,
 	extensions: Extensions,
 ) -> Option<MethodResponse>

@@ -70,9 +70,9 @@ where
 pub async fn call_with_service<S, B>(
 	request: HttpRequest<B>,
 	batch_config: BatchRequestConfig,
-	max_request_size: u32,
+	max_request_size: usize,
 	rpc_service: S,
-	max_response_size: u32,
+	max_response_size: usize,
 ) -> HttpResponse
 where
 	B: http_body::Body<Data = Bytes> + Send + 'static,
@@ -142,7 +142,7 @@ pub mod response {
 	}
 
 	/// Create a json response for oversized requests (413)
-	pub fn too_large(limit: u32) -> HttpResponse {
+	pub fn too_large(limit: usize) -> HttpResponse {
 		let err = ResponsePayload::<()>::error(reject_too_big_request(limit));
 		let rp = Response::new(err, Id::Null);
 		let error = serde_json::to_string(&rp).expect("JSON serialization infallible; qed");

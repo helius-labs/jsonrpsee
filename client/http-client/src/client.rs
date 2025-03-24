@@ -76,8 +76,8 @@ use crate::{CertificateStore, CustomCertStore};
 /// ```
 #[derive(Debug)]
 pub struct HttpClientBuilder<L = Identity> {
-	max_request_size: u32,
-	max_response_size: u32,
+	max_request_size: usize,
+	max_response_size: usize,
 	request_timeout: Duration,
 	#[cfg(feature = "tls")]
 	certificate_store: CertificateStore,
@@ -91,13 +91,13 @@ pub struct HttpClientBuilder<L = Identity> {
 
 impl<L> HttpClientBuilder<L> {
 	/// Set the maximum size of a request body in bytes. Default is 10 MiB.
-	pub fn max_request_size(mut self, size: u32) -> Self {
+	pub fn max_request_size(mut self, size: usize) -> Self {
 		self.max_request_size = size;
 		self
 	}
 
 	/// Set the maximum size of a response in bytes. Default is 10 MiB.
-	pub fn max_response_size(mut self, size: u32) -> Self {
+	pub fn max_response_size(mut self, size: usize) -> Self {
 		self.max_response_size = size;
 		self
 	}

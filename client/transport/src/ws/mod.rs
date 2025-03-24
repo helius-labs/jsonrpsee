@@ -71,7 +71,7 @@ pub enum CertificateStore {
 #[derive(Debug)]
 pub struct Sender<T> {
 	inner: connection::Sender<BufReader<BufWriter<T>>>,
-	max_request_size: u32,
+	max_request_size: usize,
 }
 
 /// Receiving end of WebSocket transport.
@@ -91,9 +91,9 @@ pub struct WsTransportClientBuilder {
 	/// Custom headers to pass during the HTTP handshake.
 	pub headers: http::HeaderMap,
 	/// Max request payload size
-	pub max_request_size: u32,
+	pub max_request_size: usize,
 	/// Max response payload size
-	pub max_response_size: u32,
+	pub max_response_size: usize,
 	/// Max number of redirections.
 	pub max_redirections: usize,
 	/// TCP no delay.
@@ -128,13 +128,13 @@ impl WsTransportClientBuilder {
 	}
 
 	/// Set the maximum size of a request in bytes. Default is 10 MiB.
-	pub fn max_request_size(mut self, size: u32) -> Self {
+	pub fn max_request_size(mut self, size: usize) -> Self {
 		self.max_request_size = size;
 		self
 	}
 
 	/// Set the maximum size of a response in bytes. Default is 10 MiB.
-	pub fn max_response_size(mut self, size: u32) -> Self {
+	pub fn max_response_size(mut self, size: usize) -> Self {
 		self.max_response_size = size;
 		self
 	}

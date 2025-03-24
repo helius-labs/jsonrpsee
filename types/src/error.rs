@@ -39,7 +39,7 @@ pub type ErrorObjectOwned = ErrorObject<'static>;
 /// [Failed JSON-RPC response object](https://www.jsonrpc.org/specification#response_object).
 #[derive(Debug, Deserialize, Serialize, Clone, thiserror::Error)]
 #[serde(deny_unknown_fields)]
-#[error("{self:?}")]
+#[error("Error code: {code}, message: {message}")]
 pub struct ErrorObject<'a> {
 	/// Code
 	code: ErrorCode,
@@ -270,7 +270,7 @@ pub fn reject_too_many_subscriptions(limit: u32) -> ErrorObjectOwned {
 }
 
 /// Helper to get a `JSON-RPC` error object when the maximum request size limit have been exceeded.
-pub fn reject_too_big_request(limit: u32) -> ErrorObjectOwned {
+pub fn reject_too_big_request(limit: usize) -> ErrorObjectOwned {
 	ErrorObjectOwned::owned(
 		OVERSIZED_REQUEST_CODE,
 		OVERSIZED_REQUEST_MSG,

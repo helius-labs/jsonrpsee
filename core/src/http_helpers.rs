@@ -124,7 +124,11 @@ pub enum HttpError {
 /// Returns `Ok((bytes, single))` if the body was in valid size range; and a bool indicating whether the JSON-RPC
 /// request is a single or a batch.
 /// Returns `Err` if the body was too large or the body couldn't be read.
-pub async fn read_body<B>(headers: &http::HeaderMap, body: B, max_body_size: u32) -> Result<(Vec<u8>, bool), HttpError>
+pub async fn read_body<B>(
+	headers: &http::HeaderMap,
+	body: B,
+	max_body_size: usize,
+) -> Result<(Vec<u8>, bool), HttpError>
 where
 	B: http_body::Body<Data = Bytes> + Send + 'static,
 	B::Data: Send,
@@ -193,10 +197,10 @@ where
 ///
 /// NOTE: There's no specific hard limit on `Content_length` in HTTP specification.
 /// Thus this method might reject valid `content_length`
-fn read_header_content_length(headers: &http::header::HeaderMap) -> Option<u32> {
+fn read_header_content_length(headers: &http::header::HeaderMap) -> Option<usize> {
 	let length = read_header_value(headers, http::header::CONTENT_LENGTH)?;
 	// HTTP Content-Length indicates number of bytes in decimal.
-	length.parse::<u32>().ok()
+	length.parse::<usize>().ok()
 }
 
 /// Returns a string value when there is exactly one value for the given header.

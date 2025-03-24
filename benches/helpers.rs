@@ -114,8 +114,8 @@ pub async fn http_server(handle: tokio::runtime::Handle) -> (String, jsonrpsee::
 	use jsonrpsee::server::ServerBuilder;
 
 	let server = ServerBuilder::default()
-		.max_request_body_size(u32::MAX)
-		.max_response_body_size(u32::MAX)
+		.max_request_body_size(usize::MAX)
+		.max_response_body_size(usize::MAX)
 		.max_connections(10 * 1024)
 		.custom_tokio_runtime(handle)
 		.build("127.0.0.1:0")
@@ -135,8 +135,8 @@ pub async fn ws_server(handle: tokio::runtime::Handle) -> (String, jsonrpsee::se
 	use jsonrpsee::server::{ServerBuilder, SubscriptionMessage};
 
 	let server = ServerBuilder::default()
-		.max_request_body_size(u32::MAX)
-		.max_response_body_size(u32::MAX)
+		.max_request_body_size(usize::MAX)
+		.max_response_body_size(usize::MAX)
 		.max_connections(10 * 1024)
 		.custom_tokio_runtime(handle)
 		.build("127.0.0.1:0")
